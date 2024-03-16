@@ -1,0 +1,31 @@
+<% data.products.map((item, index) => {  %>
+<tr>
+    <td><%= index + 1 %></td>
+    <td><%= item.title %></td>
+    <td><%= item.price %></td>
+    <td class="action-buttons">
+        <button class="edit-button">Edit</button>
+        <button class="delete-button" id=<%= index %>>Delete</button>
+    </td>
+</tr>
+<%}) %>
+
+<script>
+    $(".delete-button").on('click', function (e) {
+        e.preventDefault();
+        console.log("click")
+        $.ajax({
+            url: `http://localhost:3000/products/${this.id}`,
+            method: 'POST',
+            success: function (response) {
+                // alert("Product")
+                // Handle the response upon success
+                $("#table-body").html(response);
+            },
+            error: function () {
+                alert('Error occurred while fetching data');
+            }
+        })
+
+    })
+</script>
